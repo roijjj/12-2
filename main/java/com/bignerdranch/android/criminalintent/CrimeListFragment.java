@@ -1,7 +1,9 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +22,19 @@ public class CrimeListFragment  extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
 
+    private Callback mcall;
 
+    public interface Callback {
+        void onCrimeSelected(Crime crime);
+    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mcall = (Callback) context;
+    }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
@@ -51,8 +63,8 @@ public class CrimeListFragment  extends Fragment {
         private CheckBox mSolvedCheckBox;
         private Crime mCrime;
 
-        public CrimeHolder(View itemView) {
-            super(itemView);
+        public CrimeHolder(LayoutInflater inflater, ViewGroup  itemView) {
+            super(inflater.inflate(R.layout.list_item_crime, itemView, false));
             itemView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
@@ -67,8 +79,9 @@ public class CrimeListFragment  extends Fragment {
         }
         @Override
         public void onClick(View v) {
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-            startActivity(intent);
+            //Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+            //startActivity(intent);
+            mcall.onCrimeSelected(mCrime);
         }
     }
         private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
@@ -81,8 +94,8 @@ public class CrimeListFragment  extends Fragment {
             @Override
             public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-                View view = layoutInflater.inflate(R.layout.list_item_crime, parent, false);
-                return new CrimeHolder(view);
+               // View view = layoutInflater.inflate(R.layout.list_item_crime, parent, false);
+                return new CrimeHolder(layoutInflater,parent);
             }
 
             @Override
@@ -95,8 +108,13 @@ public class CrimeListFragment  extends Fragment {
             public int getItemCount() {
                 return mCrimes.size();
             }
+
         }
 
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mcall = null;
+    }
 }
 

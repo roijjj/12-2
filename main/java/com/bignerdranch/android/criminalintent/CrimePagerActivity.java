@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,8 @@ import java.util.UUID;
  * Created by cody on 9/23/2017.
  */
 
-public class CrimePagerActivity extends FragmentActivity {
+public class CrimePagerActivity extends AppCompatActivity
+        implements CrimeFragment.Callback {
 
     private static final String EXTRA_CRIME_ID ="com.bignerdranch.android.criminalintent.crime_id";
     private ViewPager mViewPager;
@@ -28,7 +30,7 @@ public class CrimePagerActivity extends FragmentActivity {
         return intent;
     }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_pager);
 
@@ -55,5 +57,9 @@ public class CrimePagerActivity extends FragmentActivity {
                 break;
             }
         }
+    }
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+
     }
 }
