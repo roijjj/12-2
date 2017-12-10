@@ -16,8 +16,11 @@
                    android:layout_marginBottom="8dp"
                    android:calendarViewShown="false"
                    app:layout_constraintBottom_toBottomOf="parent"
-                   tools:layout_editor_absoluteX="49dp"/>
-<Button
+                   tools:layout_editor_absoluteX="49dp"
+                   tools:ignore="MissingConstraints">
+       </DatePicker>
+
+    <Button
 android:id="@+id/dialog_ok_button"
 style="?attr/buttonBarPositiveButtonStyle"
 android:layout_width="wrap_content"

@@ -14,6 +14,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import java.util.List;
 
+
+import java.util.Date;
+import java.util.UUID;
 /**
  * Created by cody on 9/23/2017.
  */
@@ -22,15 +25,15 @@ public class CrimeListFragment  extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
 
-    private Callback mcall;
+    private Callbacks mcall;
 
-    public interface Callback {
+    public interface Callbacks {
         void onCrimeSelected(Crime crime);
     }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mcall = (Callback) context;
+        mcall = (Callbacks) context;
     }
     @Nullable
     @Override
@@ -46,7 +49,7 @@ public class CrimeListFragment  extends Fragment {
         super.onResume();
         updateUI();
     }
-    private void updateUI() {
+    public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
         if (mAdapter == null) {
@@ -63,8 +66,8 @@ public class CrimeListFragment  extends Fragment {
         private CheckBox mSolvedCheckBox;
         private Crime mCrime;
 
-        public CrimeHolder(LayoutInflater inflater, ViewGroup  itemView) {
-            super(inflater.inflate(R.layout.list_item_crime, itemView, false));
+        public CrimeHolder(LayoutInflater inflater, ViewGroup  parent) {
+            super(inflater.inflate(R.layout.list_item_crime, parent, false));
             itemView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);

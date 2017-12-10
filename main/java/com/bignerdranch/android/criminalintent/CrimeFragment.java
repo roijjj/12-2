@@ -39,13 +39,10 @@ public class CrimeFragment extends Fragment {
     private CheckBox mSolvedCheckBox;
 
     private boolean mLargelayout;
-    private Callback mCallback;
+    private Callbacks mCallback;
 
 
-    public interface Callback{
-        void onCrimeupdate(Crime crime);
 
-    }
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID, crimeId);
@@ -53,10 +50,15 @@ public class CrimeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    public interface Callbacks{
+        void onCrimeupdate(Crime crime);
+
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallback = (Callback) context;
+        mCallback = (Callbacks) context;
     }
 
     @Override
