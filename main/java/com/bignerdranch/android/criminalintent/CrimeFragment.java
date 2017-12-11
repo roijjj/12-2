@@ -106,7 +106,7 @@ public class CrimeFragment extends Fragment {
                     dialog.show(manager, DIALOG_DATE);
                 }else {
 
-                    Intent intent = DPActivity.newIntent(getContext(), mCrime.getDate());
+                    Intent intent = pickerActivity.newIntent(getContext(), mCrime.getDate());
                     //startActivity(intent, REQUEST_DATE);
                     startActivityForResult(intent, REQUEST_DATE);
 
